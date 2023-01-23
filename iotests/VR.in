@@ -1,0 +1,12 @@
+VR
+RJ A
+RJ B
+IJ A B
+4 4 3
+2 2
+VR
+CP A 1 1
+CP B 2 2 D
+CP A 2 4 E
+VR
+

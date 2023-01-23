@@ -1,0 +1,25 @@
+CP A 1 1
+RJ A
+RJ C
+RJ B
+IJ A B
+5 5 4
+2 2 2 3 3
+CP A 1 1
+CP B 2 1 D
+CP A 2 2 E
+CP B 2 1 D
+CP A 3 4 D
+CP A 3 4 E
+CP B 4 1 D
+CP C 1 1
+D A
+IJ A B
+5 5 4
+2 2 3 3
+CP A 3 2 D
+CP B 3 1 D
+CP A 1 1
+CP B 3 2 D
+CP A 3 3 D
+

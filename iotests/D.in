@@ -1,0 +1,17 @@
+RJ A
+RJ B
+D A
+IJ A B
+5 5 4
+2 2
+D C
+RJ C
+D C
+D A
+LJ
+IJ A C
+5 5 4
+2 2
+D A C
+LJ
+

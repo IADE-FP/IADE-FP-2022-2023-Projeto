@@ -3,6 +3,9 @@
 ## Projeto <!-- omit in toc -->
 
 - [Datas Relevantes](#datas-relevantes)
+- [Utilização](#utilização)
+  - [Compilar e executar](#compilar-e-executar)
+  - [Gerar documentação](#gerar-documentação)
 - [Descrição](#descrição)
   - [Colocação de peças](#colocação-de-peças)
   - [Parâmetros de jogo](#parâmetros-de-jogo)
@@ -28,11 +31,29 @@
 
 ## Datas Relevantes
 
-| Data                      | Evento                         |
+| Data              | Evento                 |
 | ------------------------- | ------------------------------ |
-| 31/10/2022                | Disponibilização do enunciado. |
+| 31/10/2022        | Disponibilização do enunciado. |
 | 15/01/2023 23:59:59       | Entrega final do trabalho.     |
 | 16/01/2023 --- 21/01/2023 | Provas de autoria.             |
+
+## Utilização
+
+### Compilar e executar
+
+```
+gcc main.c -o main
+./main
+```
+
+### Gerar documentação
+
+```
+sudo apt install doxygen
+doxygen doxygenfile
+```
+
+É criado um diretório `doc/`, com a documentação gerada. Dentro de `doc/html/` encontra-se o ficheiro `index.html`, que pode ser aberto no browser.
 
 ## Descrição
 
@@ -165,15 +186,17 @@ Saída com insucesso:
 
 ### Iniciar Jogo (IJ)
 
-Inicia um novo jogo, se não existir já um jogo iniciado.
+Inicia um novo jogo, se não estiver ainda um jogo iniciado. É necessário indicar o nome dos jogadores que irão participar, as dimensões da grelha, o tamanho da sequência vencedora, e as peças especiais disponíveis. Os jogadores têm que estar previamente registados. O jogo inicia indicando o nome dos jogadores que nele participam por ordem alfabética.
 
-É necessário indicar o nome dos jogadores que irão participar. Estes jogadores têm de estar previamente registados. O jogo entra em curso, sem combate iniciado, indicando, por ordem alfabética, os jogadores que nele participam
+`Nome` é um nome de um jogador, `Comprimento` e `Altura` são as dimensões da grelha de jogo, `TamanhoSequência` é o tamanho da sequência vencedora, e `TamanhoPeça` é o tamanho de uma peça especial.
 
-`Nome` é um nome de um jogador.
+Nenhum valor de `TamanhoPeça` pode ser igual ou superior a `TamanhoSequência`.
 
 Entrada:
 
         IJ Nome Nome
+        Comprimento Altura TamanhoSequência
+        TamanhoPeça TamanhoPeça ... TamanhoPeça
 
 Saída com sucesso:
 
@@ -181,13 +204,25 @@ Saída com sucesso:
 
 Saída com insucesso:
 
-- Quando já existe um jogo em curso:
+- Quando já existe um jogo em curso.
 
         Existe um jogo em curso.
 
-- Quando pelo menos um dos jogadores indicados não estão registados.
+- Quando algum dos jogadores indicados não se encontra registado.
 
         Jogador não registado.
+
+- Quando as dimensões da grelha não respeitam as regras indicadas na  secção sobre [parâmetros do jogo](#parâmetros-de-jogo).
+
+        Dimensões de grelha inválidas.
+
+- Quando tamanho da sequência vencedora não respeita as regras indicadas na Secção sobre [parâmetros do jogo](#parâmetros-de-jogo).
+
+        Tamanho de sequência inválido.
+
+- Quando alguma dimensão das peças especiais não respeita as regras indicadas na Secção sobre [parâmetros do jogo](#parâmetros-de-jogo).
+
+        Dimensões de peças especiais inválidas.
 
 ### Desistir (D)
 
@@ -287,7 +322,7 @@ Mostra o estado atual da grelha do jogo em curso, indicando o conteúdo de cada 
   
 Entrada:
 
-        V
+        VR
   
 Saída com sucesso:
 
@@ -343,23 +378,19 @@ Saída com insucesso:
 A estrutura mínima do projeto deve ser a seguinte:
 
       projeto
-      |-- src: diretório com todo o código fonte
-      |-- src/main.c : ficheiro com o ponto de entrada do programa
-      |-- bin: diretório com o código compilado
-      |-- Makefile: ficheiro de configuração
+      |-- main.c : ficheiro com o programa.
       |-- iotests : diretório com testes de output, a distribuir pela docência
+      |-- figures : diretório com imagens utilizadas neste ficheiro
       |-- README.md : este ficheiro
       |-- REPORT.md : relatório do projeto
 
-O ficheiro `src/main.c` disponibilizado inclui código condicional que assegura que o caráter sinalizador de *nova linha* (`\n`) não é convertido para o padrão Windows (`\r\n`).
-
-O repositório de referência está disponível em <https://github.com/IADE-FP/Projeto>
+O repositório de referência está disponível em <https://github.com/IADE-FP/IADE-FP-2022-2023-Projeto>
 
 Para efetuar a atualizações:
 
 1. Registar o repositório como `upstream` (só deve acontecer uma vez)
 
-        git remote add upstream https://github.com/IADE-FP/Projeto
+        git remote add upstream https://github.com/IADE-FP/IADE-FP-2022-2023-Projeto
 
 2. Atualizar o `upstream` (sempre que existirem atualizações)
 
@@ -412,15 +443,15 @@ Deve existir, na raiz do repositório, um ficheiro de relatório `REPORT.md` com
 
 A ausência de identificação individual no ficheiro de relatório implica a anulação da participação individual no projeto.
 
-O código fonte entregue será sujeito a validação por um conjunto de testes reservado para esse efeito, e será compilado recorrendo a GNU Make, de acordo com a configuração presente no ficheiro `Makefile`, executando apenas
+O código fonte entregue será sujeito a validação por um conjunto de testes reservado para esse efeito, e será compilado com a seguinte instrução:
 
 ```bash
-make
+gcc main.c -o main
 ```
 
-A compilação deve gerar o programa `main` no diretório `bin`, que será executado com as instruções dos testes.
+A compilação deve gerar o programa `main` no diretório atual, que será executado com as instruções dos testes.
 
-A entrega no *e-learning* corresponde a um ficheiro `zip` do repositório *GitHub Classroom*, excluindo ficheiros compilados (i.e., executar `make clean` antes de construir o `zip`).
+A entrega no *e-learning* corresponde a um ficheiro `zip` do repositório *GitHub Classroom*, excluindo eventuais ficheiros compilados.
 
 ## Prova de Autoria
 
